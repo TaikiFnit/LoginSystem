@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
-    <title><%= title %></title>
+    <meta charset="utf-8">
+    <title>ログイン後</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1>My site</h1>
+    <p>Welcome to My site</p>
+    <p><%= user %> さんようこそ。</p>
+    <p><a href="/logout">ログアウト</a></p>
   </body>
 </html>
