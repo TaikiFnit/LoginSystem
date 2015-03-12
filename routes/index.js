@@ -14,7 +14,7 @@ var loginCheck = function(req, res, next){
 /* GET home page. */
 router.get('/', loginCheck, function(req, res, next) {
   res.render('index', { user: req.session.user });
-  console.log(req.sessoin.user);
+  console.log(req.session.user);
 });
 
 router.get('/login', function(req, res){
