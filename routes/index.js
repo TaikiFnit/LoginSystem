@@ -28,6 +28,9 @@ router.get('/', loginCheck, function(req, res, next) {
 // ログイン処理を行うlogin.html
 router.get('/login', function(req, res){
     /* mysql */
+    if(req.session.user){
+        res.redirect('/');
+    }
     
     res.render('login');
     
@@ -64,7 +67,6 @@ router.post('/login', function(req, res){
              res.redirect('/');
          }
          
-            
         console.log(results);
     });
 });
@@ -85,7 +87,7 @@ router.post('/add', function(req, res){
       }
   });
 
-  /* mongdb 
+  /* mongdb
   var newUser = new User(req.body);
   newUser.save(function(err){
     if(err){
