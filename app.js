@@ -39,10 +39,11 @@ app.use(session({
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var appRoutes = require('./routes/appRoutes.js');
+//var appRoutes = require('./routes/appRoutes');
 
 app.use('/', routes);
 app.use('/users', users);
+//app.use('/appCreate', appRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -11,6 +11,32 @@ var connection = mysql.createConnection({
   database: process.env.DB_NAME || 'mod1_DB'
 });
 
+// Catch data from Database and output console
+connection.query('select * from messages', function(err, results, fields){
+		// output results		
+		console.log('Connection Test to MySQL from messages');
+		console.log('---results---');
+		console.log(results);
+		console.log('---result end---');
+		//console.log('---fields---');
+		//console.log(fields);
+		//console.log('---fields end---');
+});
+
+// Catch data from Database and output console
+connection.query('select * from users', function(err, results, fields){
+	// output results		
+	console.log('Connection Test to MySQL from users');
+	console.log('---results---');
+	console.log(results);
+	console.log('---result end---');
+	//console.log('---fields---');
+	//console.log(fields);
+	//console.log('---fields end---');
+});
+
+// Routing of browser
+
 var loginCheck = function(req, res, next){
   if(req.session.user){
     next();
@@ -104,6 +130,113 @@ router.get('/logout', function(req, res){
   req.session.destroy();
   console.log('deleted session');
   res.redirect('/');
+});
+
+
+// Routing of Application
+
+// アカウント登録
+router.post('/appCreate', function(req, res) {
+	// output request data
+	console.log(req.body);
+    var name = req.body.name;
+    var password = req.body.password;
+   
+    
+    connection.query('insert into users(name, password) values(?, ?)', [name, password], function(err, results){
+		// output variable err
+		console.log('--- err ---');
+		console.log(err);
+		console.log('--- err end ---');
+
+		// output variable results
+		console.log('--- results ---');
+		console.log(results);	
+
+		var checkResult = function(r){
+			if(results){
+				return true;
+			} else {
+				return false;
+			}
+		};
+
+		var response = {
+			"result": checkResult(results),
+			"err": err
+		};
+	//	req.session.user = req.body.name;
+		res.send(response);
+    });
+});
+
+// ログイン
+router.post('/appLogin', function(req, res){
+	var name = req.body.name;
+	var password = req.body.password;
+
+	connection.query('select * from users where name = ? and password = ?', [name, password], function(err, results){
+		// output variable err
+		console.log('--- err ---');
+		console.log(err);
+		console.log('--- err end ---');
+
+		// output variable results
+		console.log('--- results ---');
+		console.log(results);	
+		console.log('--- results end ---')
+
+		// ログインに成功したかどうかをreturnする(しなければならない)関数 (現在は実装できてない)
+		var checkResult = function(r){
+			console.log('r.name');	
+			console.log(r.name);
+			console.log('results.name');
+			console.log(results.name);
+			console.log('req.body.name');
+			console.log(req.body.name);
+			if(r.name == req.body.name){
+				console.log('in results if');
+				console.log(r);
+				return true;
+			} else {
+				console.log('in results else');
+				console.log(r);
+				return false;
+			}
+		};
+
+		var response = {
+			"result": checkResult(results),
+			"err": err
+		};
+	//	req.session.user = req.body.name;
+		res.send(response);
+
+	});
+    
+});
+
+// セッションのチェック
+router.post('/checkSession', function(req, res){
+   	if(req.sessoin.user){
+		// セッションが有効
+		// res.send();
+	} 
+	else {
+		// セッションが無効
+		// res.send();
+	}	
+});
+
+// ログアウト
+router.post('/appLogout', function(req, res){
+  req.session.destroy();
+  console.log('deleted session');
+  // セッションを無効にしたことを通知
+  var response = {
+    "result": true
+  };
+  res.send(response);
 });
 
 module.exports = router;

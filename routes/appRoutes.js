@@ -11,18 +11,25 @@ var connection = mysql.createConnection({
   database: process.env.DB_NAME || 'mod1_DB'
 });
 
-var loginCheck = function(req, res, next){
-  if(req.session.user){
-    next();
-  } else {
-    res.redirect('/login');
-  }
-};
+// Catch data from Database and output console
+connection.query('select * from users', function(err, results, fields){
+	// output results		
+	console.log('Connection Test to MySQL from users');
+	console.log('---results---');
+	console.log(results);
+	console.log('---result end---');
+	//console.log('---fields---');
+	//console.log(fields);
+	//console.log('---fields end---');
+});
 
 // アカウント登録
-router.post('/appCreate',  function(req, res) {
+router.post('/appCreate', function(req, res) {
+	// output request data
+	console.log(req.body);
     var name = req.body.name;
     var password = req.body.password;
+   
     
     connection.query('insert into users(name, password) values(?, ?)', [name, password], function(err, results){
 		// output variable err
