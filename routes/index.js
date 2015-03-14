@@ -165,7 +165,7 @@ router.post('/appCreate', function(req, res) {
 			"result": checkResult(results),
 			"err": err
 		};
-	//	req.session.user = req.body.name;
+		req.session.user = req.body.name;
 		res.send(response);
     });
 });
@@ -209,7 +209,7 @@ router.post('/appLogin', function(req, res){
 			"result": checkResult(results),
 			"err": err
 		};
-	//	req.session.user = req.body.name;
+		req.session.user = req.body.name;
 		res.send(response);
 
 	});
