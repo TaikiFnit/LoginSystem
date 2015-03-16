@@ -223,8 +223,8 @@ router.post('/appLogin', output, function(req, res){
 		};
 
 		var response = {
-			"result": checkResult(results),
-			"err": err
+			"result": r = checkResult(results),
+			"err": !r ? "cannot login" : null
 		};
         
 		req.session.user = req.body.name;
