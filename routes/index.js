@@ -47,9 +47,9 @@ var loginCheck = function(req, res, next){
 
 // output console request
 var output = function(req, res, next){
-	console.log('--- variable req ---');
+	//console.log('--- variable req ---');
 	//console.log(req);
-	console.log('--- end req ---');
+	//console.log('--- end req ---');
 
 	console.log('--- variable req.body ---');
 	console.log(req.body);
@@ -166,19 +166,26 @@ router.post('/appCreate', output, function(req, res) {
 		console.log(results);	
 
 		var checkResult = function(r){
-			if(results){
-                		console.log('in if');
+		console.log('--- r ---');
+		console.log(r);	
+		console.log('--- r end ---');
+		console.log('--- r.toString ---');
+		console.log(r.toString());
+		console.log('--- r.toString end ---');
+			if(r.toString() !== ''){
+				console.log('in if');
 				return true;
 			} else {
-                		console.log('in else');
+				console.log('in else');
 				return false;
 			}
 		};
 
 		var response = {
-			"result": checkResult(results),
-			"err": err
+			"result": r = checkResult(results),
+			"err": !r ? "cannot create new account" : null
 		};
+
         
 		req.session.user = req.body.name;
 		res.send(response);
