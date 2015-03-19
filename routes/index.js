@@ -90,7 +90,6 @@ router.get('/login', output, function(req, res){
   });
   */
 });
-
 // browser用のログイン処理
 router.post('/login', output, function(req, res){
 	
@@ -242,13 +241,17 @@ router.post('/appLogin', output, function(req, res){
 
 // セッションのチェック
 router.post('/checkSession', output, function(req, res){
+	console.log("in checkSession");
+	console.log("req.session.user");
+	console.log(req.session.user);
+
    	if(req.sessoin.user){
 		// セッションが有効
-		// res.send();
+		res.send({"result": true});
 	} 
 	else {
 		// セッションが無効
-		// res.send();
+		res.send({"result": false});
 	}	
 });
 
