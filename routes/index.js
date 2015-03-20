@@ -240,16 +240,28 @@ router.post('/appLogin', output, function(req, res){
 });
 
 // セッションのチェック
-router.post('/checkSession', output, function(req, res){
-	console.log("in checkSession");
-	console.log("req.session.user");
-	console.log(req.session.user);
+router.get('/checkSession', output, function(req, res){
+	console.log("checkSessionにGETされました。");
 
-   	if(req.sessoin.user){
+	console.log("--- req ---");
+	console.log(req);
+	console.log("--- end req ---");
+	
+	console.log("--- res ---");
+	console.log(res);
+	console.log("--- end res ---");
+
+	console.log("--- req.session.user ---");
+	console.log(req.session.user);
+	console.log("--- end req.session.user ---");
+
+   	if(req.session.user){
+		console.log("trueを送信します.");
 		// セッションが有効
 		res.send({"result": true});
 	} 
 	else {
+		console.log("falseを送信します.");
 		// セッションが無効
 		res.send({"result": false});
 	}	
